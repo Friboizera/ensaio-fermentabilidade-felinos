@@ -1,0 +1,19 @@
+# Design de Experimentos e Análise Estatística Avançada 🐈🔬
+
+Pipeline de análise estatística estruturada desenvolvido para avaliar o impacto de múltiplas variantes de tratamento ao longo do tempo, utilizando um delineamento crossover parcial com medidas repetidas.
+
+## 📌 O Desafio e o Valor do Projeto
+Em cenários de avaliação de produtos (equivalente a Testes A/B/n complexos), a análise de dados com medidas repetidas exige rigor para evitar falsos positivos. O objetivo deste projeto foi criar um protocolo estatístico padronizado e automatizado que não apenas modela a inferência, mas também avalia autonomamente a validade dos pressupostos matemáticos antes de emitir um resultado.
+
+## 🛠️ Metodologia e Stack Técnico
+* **Python:** Pandas, Numpy, SciPy, Matplotlib
+* **Statsmodels:** Implementação de Modelos Lineares Mistos (MixedLM) para isolar o efeito aleatório da amostra.
+* **Inferência Estatística Primária:** Testes de Wald para medir a significância de Tratamentos, Tempo e da Interação (Tratamento × Tempo).
+* **Avaliação Pós-Hoc:** Testes de Tukey HSD, Contrastes Planeados e extração de tendências polinomiais (linear e quadrática).
+
+## 📊 Arquitetura do Protocolo de Decisão
+O grande diferencial técnico deste script é a implementação de um sistema hierárquico de diagnóstico que roteia a análise automaticamente:
+* **Diagnóstico Rigoroso:** Todos os dados passam por testes de Shapiro-Wilk (normalidade) e Levene (homocedasticidade).
+* **Caminho A (Ideal):** Pressupostos matemáticos validados. A inferência segue puramente pelo MixedLM (como validado na variável de pH).
+* **Caminho B (Moderado):** Desvios moderados detetados. O modelo exige cautela adicional. Aplicado na avaliação de Amónia, permitindo identificar um aumento significativo (+115,6%, p=0.0018) nos grupos tratados versus controlo no Dia 15 através de contrastes planeados.
+* **Caminho C (Crítico):** Violações severas, transformando a inferência formal numa análise descritiva estruturada para prevenir decisões de negócio erradas baseadas em falsas premissas.
